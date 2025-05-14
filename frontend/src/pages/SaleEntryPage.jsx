@@ -809,22 +809,6 @@ const SaleEntryPage = () => {
   const branch = user?.branch;
 
 
-//   useEffect(() => {
-//     const fetchUser = async () => {
-//       try {
-//         const res = await axios.get('http://localhost:5000/api/auth/profile', {
-//           headers: { Authorization: `Bearer ${token}` },
-//         });
-//         console.log(res.data)
-//         setCanSale(res.data?.canSale || false);
-//       } catch (err) {
-//         console.error('Failed to fetch user profile');
-//       } finally {
-//         setCheckingPermission(false);
-//       }
-//     };
-//     fetchUser();
-//   }, []);
 
 useEffect(() => {
     const fetchUser = async () => {
@@ -832,7 +816,7 @@ useEffect(() => {
         const token = localStorage.getItem('token'); // ✅ Get token
         if (!token) throw new Error('No token found');
   
-        const res = await axios.get('http://localhost:5000/api/auth/profile', {
+        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/auth/profile`, {
           headers: { Authorization: `Bearer ${token}` },
         });
   
@@ -851,7 +835,7 @@ useEffect(() => {
   useEffect(() => {
     const fetchDistricts = async () => {
         const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5000/api/district/branch', {
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/district/branch`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       console.log(res)
@@ -884,7 +868,7 @@ useEffect(() => {
     if (!selectedDate) return;
     setLoading(true);
   
-    axios.get(`http://localhost:5000/api/sale?date=${selectedDate}`)
+    axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/sale?date=${selectedDate}`)
       .then(res => {
         const saleData = Array.isArray(res.data) ? res.data : [];
         setSales(saleData);
@@ -955,7 +939,7 @@ const handleSubmit = async () => {
           continue;
         }
   
-        await axios.post('http://localhost:5000/api/sale', {
+        await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/sale`, {
           branch,
           district: district.name,
           date: selectedDate,
@@ -998,7 +982,7 @@ const getTotalAmount = () => {
     if (!saleId) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/sale/${saleId}`, {
+      await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/sale/${saleId}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

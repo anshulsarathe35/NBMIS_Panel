@@ -8,17 +8,10 @@ const DistrictPage = () => {
   const [name, setName] = useState('');
   const [editId, setEditId] = useState(null);
 
-//   const fetchDistricts = async () => {
-//     try {
-//       const res = await axios.get('http://localhost:5000/api/district');
-//       setDistricts(res.data);
-//     } catch (err) {
-//       console.error('Error fetching districts', err);
-//     }
-//   };
+
 const fetchDistricts = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/district', {
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/district`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setDistricts(res.data);
@@ -32,11 +25,11 @@ const fetchDistricts = async () => {
     e.preventDefault();
     try {
       if (editId) {
-        await axios.put(`http://localhost:5000/api/district/${editId}`, { name }, {
+        await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/district/${editId}`, { name }, {
           headers: { Authorization: `Bearer ${token}` },
         });
       } else {
-        await axios.post('http://localhost:5000/api/district', { name }, {
+        await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/district`, { name }, {
           headers: { Authorization: `Bearer ${token}` },
         });
       }
@@ -56,7 +49,7 @@ const fetchDistricts = async () => {
   const handleDelete = async (id) => {
     if (confirm('Are you sure you want to delete this district?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/district/${id}`, {
+        await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/district/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         fetchDistricts();

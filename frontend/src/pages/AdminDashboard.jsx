@@ -158,7 +158,7 @@ const AdminDashboard = () => {
   const token = localStorage.getItem('token');
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/admin/users', {
+    axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/admin/users`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then(res => {

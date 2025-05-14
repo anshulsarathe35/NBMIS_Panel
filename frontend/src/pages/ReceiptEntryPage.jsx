@@ -25,7 +25,7 @@ const ReceiptEntryPage = () => {
           const token = localStorage.getItem('token'); // ✅ Get token
           if (!token) throw new Error('No token found');
     
-          const res = await axios.get('http://localhost:5000/api/auth/profile', {
+          const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/auth/profile`, {
             headers: { Authorization: `Bearer ${token}` },
           });
     
@@ -40,15 +40,10 @@ const ReceiptEntryPage = () => {
       fetchUser();
     }, []);
 
-    //old one
-//   const fetchDistricts = async () => {
-//     const res = await axios.get('/api/district');
-//     setDistricts(res.data);
-//   };
 useEffect(() => {
     const fetchDistricts = async () => {
         const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5000/api/district/branch', {
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/district/branch`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       console.log(res)
@@ -89,28 +84,6 @@ useEffect(() => {
     setTotal(newTotal);
   };
 
-//   const handleSubmit = async () => {
-//     try {
-//       const entries = districts.map((d) => ({
-//         district: d.name,
-//         date,
-//         cash: receipts[d.name]?.cash || 0,
-//         bank: receipts[d.name]?.bank || 0,
-//         online: receipts[d.name]?.online || 0,
-//       }));
-
-//       await Promise.all(entries.map((entry) =>
-//         axios.post('/api/receipt', entry, {
-//           headers: { Authorization: `Bearer ${token}` },
-//         })
-//       ));
-
-//       alert('Receipts saved successfully!');
-//     } catch (err) {
-//       console.error('Error saving receipts:', err);
-//       alert('Error saving receipts');
-//     }
-//   };
 
 const handleSubmit = async () => {
     try {
@@ -145,9 +118,6 @@ const handleSubmit = async () => {
   };
   
 
-//   useEffect(() => {
-//     fetchDistricts();
-//   }, []);
 
   useEffect(() => {
     if (districts.length) fetchReceipts();
@@ -173,7 +143,7 @@ const handleSubmit = async () => {
 
       <table className="w-full border mt-4 mb-6 font-semibold">
         <thead>
-          <tr className="bg-gray-100 bg-gray-400">
+          <tr className="bg-gray-400">
             <th className="border px-4 py-2">District</th>
             <th className="border px-4 py-2">Cash</th>
             <th className="border px-4 py-2">Private</th>

@@ -758,7 +758,7 @@ const ReportsPage = () => {
         const token = localStorage.getItem('token');
         if (!token) throw new Error('No token found');
 
-        const res = await axios.get('http://localhost:5000/api/auth/profile', {
+        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/auth/profile`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
